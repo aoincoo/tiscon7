@@ -106,6 +106,10 @@
           <td><span th:text="*{washingMachineInstallation} ? 'あり' : 'なし'"></span></td>
           <input type="hidden" name="washingMachineInstallation" id="washingMachineInstallation" th:value="*{washingMachineInstallation}"/>
         </tr>
+        <tr>
+          <th>引っ越し月</th>
+          <td><span th:text="*{movingMonth}"></span></td>
+          <input type="movingMonth" name="movingMonth" id="movingMonth" th:value="*{movingMonth}"/>
         </tbody>
       </table>
       <div class="form-group">

@@ -26,6 +26,8 @@ public class UserOrderDto {
 
     private boolean washingMachineInstallation;
 
+    private String movingMonth;
+
     public String getCustomerName() {
         return customerName;
     }
@@ -120,5 +122,13 @@ public class UserOrderDto {
 
     public void setWashingMachineInstallation(Boolean washingMachineInstallation) {
         this.washingMachineInstallation = washingMachineInstallation;
+    }
+
+    public String getMovingMonth() {
+        return movingMonth;
+    }
+
+    public void setMovingMonth(String movingMonth) {
+        this.movingMonth = movingMonth;
     }
 }
