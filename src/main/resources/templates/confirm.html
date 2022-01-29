@@ -2,7 +2,7 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <title>ご入力内容の確認</title>
+  <title>お見積り情報確認</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <link rel="stylesheet" th:href="@{http://fonts.googleapis.com/css?family=Exo:900}"
@@ -25,9 +25,6 @@
       入力内容をご確認ください。<br/>
       この内容でお見積りする場合は、「概算お見積もりをする」ボタンを押してください。
     </div>
-    <ul th:if="${#fields.hasErrors('all')}">
-      <li th:each="err : ${#fields.errors('all')}" th:text="${err}"></li>
-    </ul>
     <div class="col-sm-12">
       <div class="sub-title">お客様情報</div>
       <table class="table table-bordered">
@@ -36,22 +33,30 @@
         <tbody>
         <tr>
           <th style="width: 40%">氏名</th>
+
           <td>
-            <span th:text="*{customerName}" />
+            <span th:if="${#fields.hasErrors('customerName')}" style="color:red;">入力してください</span>
+            <span th:if="${!#fields.hasErrors('customerName')}" th:text="*{customerName}" />
           </td>
           <input type="hidden" name="customerName" id="customerName" th:value="*{customerName}"/>
         </tr>
         <tr>
           <th>連絡先TEL</th>
-          <td><span th:text="*{tel}"></span></td>
+          <td>
+            <span th:if="${#fields.hasErrors('tel')}" style="color:red;">入力してください</span>
+            <span th:if="${!#fields.hasErrors('tel')}" th:text="*{tel}"></span>
+          </td>
           <input type="hidden" name="tel" id="tel" th:value="*{tel}"/>
         </tr>
         <tr>
           <th>連絡先メールアドレス</th>
-          <td><span th:text="*{email}"></span></td>
+          <td>
+            <span th:if="${#fields.hasErrors('email')}" style="color:red;">入力してください</span>
+            <span th:if="${!#fields.hasErrors('email')}" th:text="*{email}"></span>
+          </td>
           <input type="hidden" name="email" id="email" th:value="*{email}"/>
         </tr>
-      </tbody>
+        </tbody>
       </table>
     </div>
     <div class="col-sm-12">
@@ -69,7 +74,10 @@
         </tr>
         <tr>
           <th>集荷元住所（市区町村以下）</th>
-          <td><span th:text="*{oldAddress}"></span></td>
+          <td>
+            <span th:if="${#fields.hasErrors('oldAddress')}" style="color:red;">入力してください</span>
+            <span th:if="${!#fields.hasErrors('oldAddress')}" th:text="*{oldAddress}"></span>
+          </td>
           <input type="hidden" name="oldAddress" id="oldAddress" th:value="*{oldAddress}"/>
         </tr>
         <tr>
@@ -81,7 +89,10 @@
         </tr>
         <tr>
           <th>お届け先住所（市区町村以下）</th>
-          <td><span th:text="*{newAddress}"></span></td>
+          <td>
+            <span th:if="${#fields.hasErrors('newAddress')}" style="color:red;">入力してください</span>
+            <span th:if="${!#fields.hasErrors('newAddress')}" th:text="*{newAddress}"></span>
+          </td>
           <input type="hidden" name="newAddress" id="newAddress" th:value="*{newAddress}"/>
         </tr>
         </tbody>
@@ -89,38 +100,47 @@
     </div>
     <div class="col-sm-12">
       <div class="sub-title">お荷物情報</div>
-        <table class="table table-bordered">
-          <col span="1" style="background-color: #FFFFFF;">
-          <col span="2" style="background-color: #FFFFFF;">
-          <tbody>
-          <tr>
-            <th style="width: 40%">段ボールの個数</th>
-            <td><span th:text="*{box}"></span></td>
-            <input type="hidden" name="box" id="box" th:value="*{box}"/>
-          </tr>
-          <tr>
-            <th>ベッドの個数</th>
-            <td><span th:text="*{bed}"></span></td>
-            <input type="hidden" name="bed" id="bed" th:value="*{bed}"/>
-          </tr>
-          <tr>
-            <th>自転車の個数</th>
-            <td><span th:text="*{bicycle}"></span></td>
-            <input type="hidden" name="bicycle" id="bicycle" th:value="*{bicycle}"/>
-          </tr>
-          <tr>
-            <th>洗濯機の個数</th>
-            <td><span th:text="*{washingMachine}"></span></td>
-            <input type="hidden" name="washingMachine" id="washingMachine" th:value="*{washingMachine}"/>
-          </tr>
-          <tr>
-            <th>洗濯機の設置工事申し込み</th>
-            <td><span th:text="*{washingMachineInstallation} ? 'あり' : 'なし'"></span></td>
-            <input type="hidden" name="washingMachineInstallation" id="washingMachineInstallation" th:value="*{washingMachineInstallation}"/>
-          </tr>
-          <th>引っ越し月</th>
-          <td><span th:text="*{movingMonth}"></span></td>
-          <input type="hidden" name="movingMonth" id="movingMonth" th:value="*{movingMonth}"/>
+      <table class="table table-bordered">
+        <col span="1" style="background-color: #FFFFFF;">
+        <col span="2" style="background-color: #FFFFFF;">
+        <tbody>
+        <tr>
+          <th style="width: 40%">段ボールの個数</th>
+          <td>
+            <span th:if="${#fields.hasErrors('box')}" style="color:red;">入力してください</span>
+            <span th:if="${!#fields.hasErrors('box')}" th:text="*{box}"></span>
+          </td>
+          <input type="hidden" name="box" id="box" th:value="*{box}"/>
+        </tr>
+        <tr>
+          <th>ベッドの個数</th>
+          <td>
+            <span th:if="${#fields.hasErrors('bed')}" style="color:red;">入力してください</span>
+            <span th:if="${!#fields.hasErrors('bed')}" th:text="*{bed}"></span>
+          </td>
+          <input type="hidden" name="bed" id="bed" th:value="*{bed}"/>
+        </tr>
+        <tr>
+          <th>自転車の個数</th>
+          <td>
+            <span th:if="${#fields.hasErrors('bicycle')}" style="color:red;">入力してください</span>
+            <span th:if="${!#fields.hasErrors('bicycle')}" th:text="*{bicycle}"></span>
+          </td>
+          <input type="hidden" name="bicycle" id="bicycle" th:value="*{bicycle}"/>
+        </tr>
+        <tr>
+          <th>洗濯機の個数</th>
+          <td>
+            <span th:if="${#fields.hasErrors('washingMachine')}" style="color:red;">入力してください</span>
+            <span th:if="${!#fields.hasErrors('washingMachine')}" th:text="*{washingMachine}"></span>
+          </td>
+          <input type="hidden" name="washingMachine" id="washingMachine" th:value="*{washingMachine}"/>
+        </tr>
+        <tr>
+          <th>洗濯機の設置工事申し込み</th>
+          <td><span th:text="*{washingMachineInstallation} ? 'あり' : 'なし'"></span></td>
+          <input type="hidden" name="washingMachineInstallation" id="washingMachineInstallation" th:value="*{washingMachineInstallation}"/>
+        </tr>
         </tbody>
       </table>
       <div class="form-group">
