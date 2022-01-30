@@ -163,9 +163,13 @@ public class EstimateDao {
         // 総ボックス数からトラック料金を計算する
         int tarInd = 0;
         while (tarInd < truckCapacityListSize-1) {
-            if (boxNum - maxBoxes[tarInd+1] <= 0) {
-                tarInd++;
+            // 最も単価が安いトラックを選択
+            for (int i = truckCapacityListSize-1; i > tarInd; i--){
+                if (boxNum - maxBoxes[i] <= 0) {
+                    tarInd++;
+                }
             }
+
             boxNum = boxNum - maxBoxes[tarInd] >= 0 ? boxNum - maxBoxes[tarInd] : 0;
             priceSum += prices[tarInd];
 
