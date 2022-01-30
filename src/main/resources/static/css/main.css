@@ -307,3 +307,12 @@ td {
     border-radius: .28571429rem;
     border: 1px solid rgba(34,36,38,.15);
 }
+
+.error-background{
+    background-color: rgb(255,230,230);
+}
+
+.value-info{
+    display: flex;
+}
+

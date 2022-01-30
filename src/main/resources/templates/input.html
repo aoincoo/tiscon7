@@ -21,20 +21,25 @@
       お見積り情報入力
     </div>
 
-    <div class="col-sm-12">
+    <div style="width: 80%; margin: auto" class="col-sm-12">
       <fieldset>
         <div class="sub-title">お客様情報</div>
         <div class="form-group">
           <label for="customerName">氏名</label>
-          <input type="text" id="customerName" name="customerName" th:field="*{customerName}" class="form-control" value="山田太郎"/>
+          <input th:classappend="${#fields.hasErrors('customerName')} ? error-background : ''" type="text" id="customerName" name="customerName" th:field="*{customerName}" class="form-control" value="山田太郎"/>
+          <span th:if="${#fields.hasErrors('customerName')}" style="color:red;" th:errors="*{customerName}">customerName error</span>
         </div>
+
         <div class="form-group">
           <label for="tel">連絡先TEL</label>
-          <input type="tel" id="tel" name="tel" th:field="*{tel}" class="form-control" value="03-1234-5678"/>
+          <input th:classappend="${#fields.hasErrors('tel')} ? error-background : ''" type="tel" id="tel" name="tel" th:field="*{tel}" class="form-control" value="03-1234-5678"/>
+          <span th:if="${#fields.hasErrors('tel')}" style="color:red;" th:errors="*{tel}">tel error</span>
         </div>
+
         <div class="form-group">
           <label for="email">連絡先メールアドレス</label>
-          <input type="text" id="email" name="email" th:field="*{email}" class="form-control" value="test@test.com"/>
+          <input th:classappend="${#fields.hasErrors('email')} ? error-background : ''" type="text" id="email" name="email" th:field="*{email}" class="form-control" value="test@test.com"/>
+          <span th:if="${#fields.hasErrors('email')}" style="color:red;" th:errors="*{email}">email error</span>
         </div>
         <div class="sub-title">集荷元・お届け先</div>
         <div class="form-group">
@@ -45,8 +50,9 @@
         </div>
         <div class="form-group">
           <label for="oldAddress">集荷元住所（市区町村以下）</label>
-          <input type="text" id="oldAddress" name="oldAddress" th:field="*{oldAddress}"
+          <input th:classappend="${#fields.hasErrors('oldAddress')} ? error-background : ''" type="text" id="oldAddress" name="oldAddress" th:field="*{oldAddress}"
                  class="form-control" value="新宿区西新宿1-1-1"/>
+          <span th:if="${#fields.hasErrors('oldAddress')}" style="color:red;" th:errors="*{oldAddress}">oldAddress error</span>
         </div>
         <div class="form-group">
           <label for="newPrefectureId">お届け先住所（都道府県）</label>
@@ -56,44 +62,69 @@
         </div>
         <div class="form-group">
           <label for="newAddress">お届け先住所（市区町村以下）</label>
-          <input type="text" id="newAddress" name="newAddress" th:field="*{newAddress}" class="form-control"
+          <input th:classappend="${#fields.hasErrors('newAddress')} ? error-background : ''" type="text" id="newAddress" name="newAddress" th:field="*{newAddress}" class="form-control"
                  value="札幌市南区1"/>
+          <span th:if="${#fields.hasErrors('newAddress')}" style="color:red;" th:errors="*{newAddress}">newAddress error</span>
         </div>
       </fieldset>
       <fieldset>
-      <div class="sub-title">お荷物情報</div>
+      <div class="sub-title value-info">お荷物情報</div>
         <div class="form-group">
           <label for="box">段ボールの個数</label>
-          <input type="text" id="box" name="box" th:field="*{box}" class="form-control" value="10"/>
+          <input th:classappend="${#fields.hasErrors('box')} ? error-background : ''" type="text" id="box" name="box" th:field="*{box}" class="form-control" value="10"/>
+          <span th:if="${#fields.hasErrors('box')}" style="color:red;" th:errors="*{box}">box error</span>
         </div>
         <div class="form-group">
           <label for="bed">ベッドの個数</label>
-          <input type="text" id="bed" name="bed" th:field="*{bed}" class="form-control" value="3"/>
+          <input th:classappend="${#fields.hasErrors('bed')} ? error-background : ''" type="text" id="bed" name="bed" th:field="*{bed}" class="form-control" value="3"/>
+          <span th:if="${#fields.hasErrors('bed')}" style="color:red;" th:errors="*{bed}">bed error</span>
         </div>
         <div class="form-group">
           <label for="bicycle">自転車の個数</label>
-          <input type="text" id="bicycle" name="bicycle" th:field="*{bicycle}" class="form-control" value="1"/>
+          <input th:classappend="${#fields.hasErrors('bicycle')} ? error-background : ''" type="text" id="bicycle" name="bicycle" th:field="*{bicycle}" class="form-control" value="1"/>
+          <span th:if="${#fields.hasErrors('bicycle')}" style="color:red;" th:errors="*{bicycle}">bicycle error</span>
         </div>
         <div class="form-group">
           <label for="washingMachine">洗濯機の個数</label>
-          <input type="text" id="washingMachine" name="washingMachine" th:field="*{washingMachine}" class="form-control"
+          <input th:classappend="${#fields.hasErrors('washingMachine')} ? error-background : ''" type="text" id="washingMachine" name="washingMachine" th:field="*{washingMachine}" class="form-control"
                  value="1"/>
+          <span th:if="${#fields.hasErrors('washingMachine')}" style="color:red;" th:errors="*{washingMachine}">washingMachine error</span>
         </div>
         <div class="form-group">
           <label for="washingMachineInstallation">洗濯機の設置工事申し込み</label>
-          <select id="washingMachineInstallation" name="washingMachineInstallation" class="form-control" th:field="*{washingMachineInstallation}">
+          <select multiple style="height: 65px; width: 65px; overflow-y: hidden;" id="washingMachineInstallation" name="washingMachineInstallation" class="form-control" th:field="*{washingMachineInstallation}">
             <option th:value="false" th:text="なし">なし</option>
             <option th:value="true" th:text="あり">あり</option>
           </select>
         </div>
+<!--        <div class="form-group">-->
+<!--        <label for="movingMonth">引っ越し月</label>-->
+<!--        <input th:classappend="${#fields.hasErrors('movingMonth')} ? error-background : ''" type="text" id="movingMonth" name="movingMonth" th:field="*{movingMonth}" class="form-control"-->
+<!--               value="1"/>-->
+<!--          <span th:if="${#fields.hasErrors('movingMonth')}" style="color:red;" th:errors="*{movingMonth}">movingMonth error</span>-->
+<!--        </div>-->
         <div class="form-group">
-        <label for="movingMonth">引っ越し月</label>
-        <input type="text" id="movingMonth" name="movingMonth" th:field="*{movingMonth}" class="form-control"
-               value="1"/>
+          <label for="oldPrefectureId">引っ越し月</label>
+          <select id="movingMonth" name="movingMonth" class="form-control">
+            <option th:value=1 th:text="1月">1月</option>
+            <option th:value=2 th:text="2月">2月</option>
+            <option th:value=3 th:text="3月">3月</option>
+            <option th:value=4 th:text="4月">4月</option>
+            <option th:value=5 th:text="5月">5月</option>
+            <option th:value=6 th:text="6月">6月</option>
+            <option th:value=7 th:text="7月">7月</option>
+            <option th:value=8 th:text="8月">8月</option>
+            <option th:value=9 th:text="9月">9月</option>
+            <option th:value=10 th:text="10月">10月</option>
+            <option th:value=11 th:text="11月">11月</option>
+            <option th:value=11 th:text="12月">12月</option>
+          </select>
+        </div>
+
       </fieldset>
       <div class="form-group">
         <div class="text-center">
-          <button type="submit" name="backToTop" class="btn-back">TOPへ戻る</button>
+          <button style="margin-right: 96px" type="submit" name="backToTop" class="btn-back">TOPへ戻る</button>
           <button type="submit" name="confirm" class="btn btn-primary">ご入力内容の確認へ</button>
         </div>
       </div>

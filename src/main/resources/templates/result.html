@@ -18,7 +18,7 @@
       <img src="../img/progress_result.svg" />
     </div>
     <div class="page-title">概算お見積り結果</div>
-    <div class="col-sm-12">
+    <div style="width: 80%; margin: auto" class="col-sm-12">
       <div class="text-center">
         <div class="primary-text"><span th:text="${price}"></span>円</div>
         <button type="submit" name="complete" class="btn btn-primary">詳細見積もり依頼へ</button>
@@ -109,12 +109,12 @@
         <tr>
           <th>引っ越し月</th>
           <td><span th:text="*{movingMonth}"></span></td>
-          <input type="movingMonth" name="movingMonth" id="movingMonth" th:value="*{movingMonth}"/>
+          <input type="hidden" name="movingMonth" id="movingMonth" th:value="*{movingMonth}"/>
         </tbody>
       </table>
       <div class="form-group">
         <div class="text-center">
-          <button type="submit" name="backToConfirm" class="btn-back">TOPへ戻る</button>
+          <button style="margin-right: 96px" type="submit" name="backToConfirm" class="btn-back">TOPへ戻る</button>
         </div>
       </div>
     </div>
