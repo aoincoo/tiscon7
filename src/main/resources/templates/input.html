@@ -68,9 +68,9 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="oldAddress">お届け先郵便番号</label>
-          <input type="text" id="newPostalCode" name="oldPostalCode"
-                 class="form-control" />
+          <label for="newAddress">お届け先郵便番号</label>
+          <input th:classappend="${#fields.hasErrors('newPostalCode')} ? error-background : ''" type="text" id="newPostalCode" name="newPostalCode" th:field="*{newPostalCode}" class="form-control" value="100-0001"/>
+          <span th:if="${#fields.hasErrors('newPostalCode')}" style="color:red;" th:errors="*{newPostalCode}">newPostalCode error</span>
           <button id="searchNewAddress" type="button">住所検索</button>
           <p id="errorNewAddress"></p>
         </div>
