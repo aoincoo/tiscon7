@@ -63,6 +63,9 @@ public class UserOrderForm {
     @NotBlank
     private String movingMonth;
 
+    private String oldPostalCode;
+    private String newPostalCode;
+
     public String getCustomerName() {
         return customerName;
     }
@@ -165,5 +168,21 @@ public class UserOrderForm {
 
     public void setMovingMonth(String movingMonth) {
         this.movingMonth = movingMonth;
+    }
+
+    public String getOldPostalCode() {
+        return oldPostalCode;
+    }
+
+    public void setOldPostalCode(String oldPostalCode) {
+        this.oldPostalCode = oldPostalCode;
+    }
+
+    public String getNewPostalCode() {
+        return newPostalCode;
+    }
+
+    public void setNewPostalCode(String newPostalCode) {
+        this.newPostalCode = newPostalCode;
     }
 }

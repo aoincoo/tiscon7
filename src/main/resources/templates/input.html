@@ -50,8 +50,8 @@
         </div>
         <div class="form-group">
           <label for="oldAddress">集荷元郵便番号</label>
-          <input type="text" id="oldPostalCode" name="oldPostalCode"
-                 class="form-control" />
+          <input th:classappend="${#fields.hasErrors('oldPostalCode')} ? error-background : ''" type="text" id="oldPostalCode" name="oldPostalCode" th:field="*{oldPostalCode}" class="form-control" value="100-0001"/>
+          <span th:if="${#fields.hasErrors('oldPostalCode')}" style="color:red;" th:errors="*{oldPostalCode}">oldPostalCode error</span>
           <button id="searchOldAddress" type="button">住所検索</button>
           <p id="errorOldAddress"></p>
         </div>
