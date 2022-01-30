@@ -49,6 +49,13 @@
           </select>
         </div>
         <div class="form-group">
+          <label for="oldAddress">集荷元郵便番号</label>
+          <input type="text" id="oldPostalCode" name="oldPostalCode"
+                 class="form-control" />
+          <button id="searchOldAddress" type="button">住所検索</button>
+          <p id="errorOldAddress"></p>
+        </div>
+        <div class="form-group">
           <label for="oldAddress">集荷元住所（市区町村以下）</label>
           <input th:classappend="${#fields.hasErrors('oldAddress')} ? error-background : ''" type="text" id="oldAddress" name="oldAddress" th:field="*{oldAddress}"
                  class="form-control" value="新宿区西新宿1-1-1"/>
@@ -59,6 +66,13 @@
           <select id="newPrefectureId" name="newPrefectureId" class="form-control">
             <option th:each="prefecture : ${prefectures}" th:value="${prefecture.prefectureId}" th:field="*{newPrefectureId}">[[${prefecture.prefectureName}]]</option>
           </select>
+        </div>
+        <div class="form-group">
+          <label for="oldAddress">お届け先郵便番号</label>
+          <input type="text" id="newPostalCode" name="oldPostalCode"
+                 class="form-control" />
+          <button id="searchNewAddress" type="button">住所検索</button>
+          <p id="errorNewAddress"></p>
         </div>
         <div class="form-group">
           <label for="newAddress">お届け先住所（市区町村以下）</label>
@@ -134,6 +148,48 @@
 <script src="../js/jquery-3.5.1.min.js" th:src="@{/js/jquery-3.5.1.min.js}"></script>
 <script src="../js/popper.min.js" th:src="@{/js/popper.min.js}"></script>
 <script src="../js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/fetch-jsonp@1.1.3/build/fetch-jsonp.min.js"></script>
+<script type="text/javascript">
+function SearchAddress(searchId, errorId, inputId, addressId){
+  let search = document.getElementById(searchId);
+search.addEventListener('click', ()=>{
+
+    let api = 'https://zipcloud.ibsnet.co.jp/api/search?zipcode=';
+    let error = document.getElementById(errorId);
+    let input = document.getElementById(inputId);
+    let address1 = document.getElementById(addressId);
+
+    let param = input.value.replace("-",""); //入力された郵便番号から「-」を削除
+    let url = api + param;
+
+    fetchJsonp(url, {
+        timeout: 10000, //タイムアウト時間
+    })
+    .then((response)=>{
+        error.textContent = ''; //HTML側のエラーメッセージ初期化
+        return response.json();
+    })
+    .then((data)=>{
+        if(data.status === 400){ //エラー時
+            error.textContent = data.message;
+        }else if(data.results === null){
+            error.textContent = '郵便番号から住所が見つかりませんでした。';
+        } else {
+            address1.value = data.results[0].address2 + data.results[0].address3;
+        }
+    })
+    .catch((ex)=>{ //例外処理
+        console.log(ex);
+    });
+}, false);
+}
+
+SearchAddress("searchOldAddress", "errorOldAddress", "oldPostalCode", "oldAddress");
+SearchAddress("searchNewAddress", "errorNewAddress", "newPostalCode", "newAddress");
+</script>
+
 </body>
+
 
 </html>

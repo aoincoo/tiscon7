@@ -125,14 +125,60 @@ public class EstimateDao {
     /**
      * 段ボール数に応じたトラック料金を取得する。
      *
-     * @param boxNum 総段ボール数
-     * @return 料金[円]
+     * @param boxNum 段ボール数
+     * @return 対象のトラックの料金[円]
      */
     public int getPricePerTruck(int boxNum) {
         String sql = "SELECT PRICE FROM TRUCK_CAPACITY WHERE MAX_BOX >= :boxNum ORDER BY PRICE LIMIT 1";
 
         SqlParameterSource paramSource = new MapSqlParameterSource("boxNum", boxNum);
         return parameterJdbcTemplate.queryForObject(sql, paramSource, Integer.class);
+    }
+
+
+    /**
+     * 段ボール数に応じたトラック料金を取得する。
+     *
+     * @param boxNum 総段ボール数
+     * @return 料金[円]
+     */
+    public int getPriceTruck(int boxNum) {
+        int priceSum = 0;
+
+        String sql = "SELECT * FROM TRUCK_CAPACITY ORDER BY MAX_BOX DESC";
+        List <TruckCapacity> truckCapacityList = parameterJdbcTemplate.query(sql,
+                BeanPropertyRowMapper.newInstance(TruckCapacity.class));
+
+        // Truck_Capacityデータベースの要素数
+        int truckCapacityListSize = truckCapacityList.size();
+
+        int[] maxBoxes = new int[truckCapacityListSize];    // 最大段ボール数
+        int[] prices = new int[truckCapacityListSize];      // 値段
+
+        for (int i = 0; i < truckCapacityListSize; i++) {
+            maxBoxes[i] = truckCapacityList.get(i).getMaxBox();
+            prices[i] = truckCapacityList.get(i).getPrice();
+        }
+
+        // 総ボックス数からトラック料金を計算する
+        int tarInd = 0;
+        while (tarInd < truckCapacityListSize-1) {
+            // 最も単価が安いトラックを選択
+            for (int i = truckCapacityListSize-1; i > tarInd; i--){
+                if (boxNum - maxBoxes[i] <= 0) {
+                    tarInd++;
+                }
+            }
+
+            boxNum = boxNum - maxBoxes[tarInd] >= 0 ? boxNum - maxBoxes[tarInd] : 0;
+            priceSum += prices[tarInd];
+
+            if (boxNum == 0) {
+                break;
+            }
+        }
+
+        return priceSum;
     }
 
     /**

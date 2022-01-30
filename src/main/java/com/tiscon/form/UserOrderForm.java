@@ -63,7 +63,6 @@ public class UserOrderForm {
     @NotBlank
     private String movingMonth;
 
-
     public String getCustomerName() {
         return customerName;
     }
